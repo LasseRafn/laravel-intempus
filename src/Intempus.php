@@ -1,6 +1,9 @@
 <?php namespace LasseRafn\LaravelIntempus;
 
 use LasseRafn\LaravelIntempus\Builders\CaseBuilder;
+use LasseRafn\LaravelIntempus\Builders\CaseGroupBuilder;
+use LasseRafn\LaravelIntempus\Builders\ContractBuilder;
+use LasseRafn\LaravelIntempus\Builders\CustomerBuilder;
 use LasseRafn\LaravelIntempus\Builders\WorkModelBuilder;
 use LasseRafn\LaravelIntempus\Utils\Request;
 
@@ -56,5 +59,20 @@ class Intempus
     public function cases()
     {
         return new CaseBuilder($this->request);
+    }
+
+    public function caseGroups()
+    {
+        return new CaseGroupBuilder($this->request);
+    }
+
+    public function contracts()
+    {
+        return new ContractBuilder($this->request);
+    }
+
+    public function customers()
+    {
+        return new CustomerBuilder($this->request);
     }
 }
