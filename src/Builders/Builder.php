@@ -25,28 +25,34 @@ class Builder
     {
 	    $responseData = $this->request->post([
 		    'queries' => [
-			    [ 'class' => $this->entity, 'type' => 'data', 'id' => [$id] ]
+			    [ 'class' => $this->entity, 'type' => 'data-list', 'id' => [$id] ]
 		    ]
 	    ]);
 
-        $firstKey = key($responseData->responses[0]);
+	    if(count($responseData->responses[0]) === 0)
+	    {
+		    return new $this->model($this->request);
+	    }
 
-        return new $this->model($this->request, $responseData->responses[0]->{$firstKey});
+        return new $this->model($this->request, $responseData->responses[0][0]);
     }
 
     public function first()
     {
 	    $responseData = $this->request->post([
 		    'queries' => [
-			    [ 'class' => $this->entity, 'type' => 'data' ]
+			    [ 'class' => $this->entity, 'type' => 'data-list' ]
 		    ]
 	    ]);
 
         $fetchedItems = $responseData->responses[0];
 
-        $firstKey = key($fetchedItems);
+        if(count($fetchedItems) === 0)
+        {
+        	return new $this->model($this->request);
+        }
 
-        return new $this->model($this->request, $fetchedItems->{$firstKey});
+        return new $this->model($this->request, $fetchedItems[0]);
     }
 
     /**
@@ -56,7 +62,7 @@ class Builder
     {
         $responseData = $this->request->post([
 	        'queries' => [
-		        [ 'class' => $this->entity, 'type' => 'data' ]
+		        [ 'class' => $this->entity, 'type' => 'data-list' ]
 	        ]
         ]);
 
