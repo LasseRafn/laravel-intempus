@@ -13,7 +13,16 @@ $ composer require lasserafn/laravel-intempus
 ```
 
 ### Laravel Service Provider
+Add the follwing to your ```providers``` array in ```config/app.php```:
+```` php
+\LasseRafn\LaravelIntempus\LaravelIntempusServiceProvider::class,
+````
 
+### Publish configs
+Run this in your terminal
+```` bash
+php artisan vendor:publish --provider="LasseRafn\LaravelIntempus\LaravelIntempusServiceProvider" --tag="config"
+````
 
 ### Route (for Auth)
 Add this to your web.php file (or where-ever you desire)
