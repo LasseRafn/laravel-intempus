@@ -23,24 +23,11 @@ class Builder
      */
     public function find($id)
     {
-        $response = $this->request->curl->post('', [
-            'query'       => [
-                'pk' => $this->request->pk
-            ],
-            'form_params' => [
-                'data' => json_encode([
-                    'nonce'   => $this->request->nounce,
-                    'token'   => $this->request->token,
-                    'queries' => [
-                        [ 'class' => $this->entity, 'type' => 'data', 'id' => [$id] ]
-                    ]
-                ])
-            ],
-        ]);
-
-        // todo check for errors and such
-
-        $responseData = json_decode($response->getBody()->getContents());
+	    $responseData = $this->request->post([
+		    'queries' => [
+			    [ 'class' => $this->entity, 'type' => 'data', 'id' => [$id] ]
+		    ]
+	    ]);
 
         $firstKey = key($responseData->responses[0]);
 
@@ -49,24 +36,12 @@ class Builder
 
     public function first()
     {
-        $response = $this->request->curl->post('', [
-            'query'       => [
-                'pk' => $this->request->pk
-            ],
-            'form_params' => [
-                'data' => json_encode([
-                    'nonce'   => $this->request->nounce,
-                    'token'   => $this->request->token,
-                    'queries' => [
-                        [ 'class' => $this->entity, 'type' => 'data' ]
-                    ]
-                ])
-            ],
-        ]);
+	    $responseData = $this->request->post([
+		    'queries' => [
+			    [ 'class' => $this->entity, 'type' => 'data' ]
+		    ]
+	    ]);
 
-        // todo check for errors and such
-
-        $responseData = json_decode($response->getBody()->getContents());
         $fetchedItems = $responseData->responses[0];
 
         $firstKey = key($fetchedItems);
@@ -79,24 +54,12 @@ class Builder
      */
     public function get()
     {
-        $response = $this->request->curl->post('', [
-            'query'       => [
-                'pk' => $this->request->pk
-            ],
-            'form_params' => [
-                'data' => json_encode([
-                    'nonce'   => $this->request->nounce,
-                    'token'   => $this->request->token,
-                    'queries' => [
-                        [ 'class' => $this->entity, 'type' => 'data' ]
-                    ]
-                ])
-            ],
+        $responseData = $this->request->post([
+	        'queries' => [
+		        [ 'class' => $this->entity, 'type' => 'data' ]
+	        ]
         ]);
 
-        // todo check for errors and such
-
-        $responseData = json_decode($response->getBody()->getContents());
         $fetchedItems = $responseData->responses[0];
 
         $items = collect([]);
