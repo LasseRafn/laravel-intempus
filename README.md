@@ -108,6 +108,14 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 [link-author]: https://github.com/lasserafn
 [link-contributors]: ../../contributors
 
+# todo
+* Allow deleting models/entities through the API
+* Allow creating models/entities through the API
+* Allow updating models/entities through the API
+* Limit ->get() method to X results and include an ->all() method that uses pagination
+* Add missing models
+* Add relationship-ish behaviour, like:
+
 ## Reason for doing this
 As of creating this package, I'm employeed at [Bizz Zolutions](https://bizzz.dk) - and one of my tasks was integrating [Intempus timeregistrering](https://bizzz.dk/partnere/intempus-timeregistrering) with [e-conomic regnskabsprogram](https://bizzz.dk/partnere/e-conomic-regnskabsprogram).
 I believe in open sourcing as much as possible so this felt very natural. Had a talk with the boss and we're equally minded :-)
