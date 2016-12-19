@@ -1,0 +1,51 @@
+{
+    "name": "lasserafn/laravel-intempus",
+    "type": "library",
+    "description": "A laravel API wrapper for Intempus",
+    "keywords": [
+        "LasseRafn",
+        "laravel-intempus"
+    ],
+    "homepage": "https://github.com/LasseRafn/laravel-intempus",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Lasse Rafn",
+            "email": "lasserafn@gmail.com",
+            "homepage": "https://apricot.dk",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "~5.6|~7.0",
+        "guzzlehttp/guzzle": "^6.2",
+        "illuminate/support": "~5.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit" : "~4.0||~5.0",
+        "squizlabs/php_codesniffer": "^2.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "LasseRafn\\laravel-intempus\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "LasseRafn\\laravel-intempus\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "phpunit",
+        "check-style": "phpcs -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src tests",
+        "fix-style": "phpcbf -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src tests"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
