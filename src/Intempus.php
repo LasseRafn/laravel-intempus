@@ -5,6 +5,7 @@ use LasseRafn\LaravelIntempus\Builders\CaseGroupBuilder;
 use LasseRafn\LaravelIntempus\Builders\ContractBuilder;
 use LasseRafn\LaravelIntempus\Builders\CustomerBuilder;
 use LasseRafn\LaravelIntempus\Builders\CustomerGroupBuilder;
+use LasseRafn\LaravelIntempus\Builders\EmployeeBuilder;
 use LasseRafn\LaravelIntempus\Builders\WorkModelBuilder;
 use LasseRafn\LaravelIntempus\Utils\Request;
 
@@ -80,5 +81,10 @@ class Intempus
     public function customerGroups()
     {
         return new CustomerGroupBuilder($this->request);
+    }
+
+    public function employees()
+    {
+        return new EmployeeBuilder($this->request);
     }
 }
