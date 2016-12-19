@@ -107,3 +107,9 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 [link-downloads]: https://packagist.org/packages/lasserafn/laravel-intempus
 [link-author]: https://github.com/lasserafn
 [link-contributors]: ../../contributors
+
+## Reason for doing this
+As of creating this package, I'm employeed at [Bizz Zolutions](https://bizzz.dk) - and one of my tasks was integrating [Intempus timeregistrering](https://bizzz.dk/partnere/intempus-timeregistrering) with [e-conomic regnskabsprogram](https://bizzz.dk/partnere/e-conomic-regnskabsprogram).
+I believe in open sourcing as much as possible so this felt very natural. Had a talk with the boss and we're equally minded :-)
+
+Use as you please. Oh, and sorry for the shameless backlinks. 
