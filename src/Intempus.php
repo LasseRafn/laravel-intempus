@@ -10,6 +10,7 @@ use LasseRafn\LaravelIntempus\Builders\EmployeeCaseRuleBuilder;
 use LasseRafn\LaravelIntempus\Builders\ProductBuilder;
 use LasseRafn\LaravelIntempus\Builders\WorkCategoryBuilder;
 use LasseRafn\LaravelIntempus\Builders\WorkModelBuilder;
+use LasseRafn\LaravelIntempus\Builders\WorkReportBuilder;
 use LasseRafn\LaravelIntempus\Utils\Request;
 
 class Intempus
@@ -104,5 +105,10 @@ class Intempus
     public function workCategories()
     {
         return new WorkCategoryBuilder($this->request);
+    }
+
+    public function workReports()
+    {
+        return new WorkReportBuilder($this->request);
     }
 }
