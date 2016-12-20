@@ -6,6 +6,7 @@ class WorkReport extends Model
 {
 	protected $entity   = 'WorkReport';
 	protected $fillable = [
+		'id',
 		'amount',
 		'approved',
 		'case_id',
@@ -20,6 +21,7 @@ class WorkReport extends Model
 		'work_type_id',
 	];
 
+	public $id;
 	public $amount;
 	public $approved;
 	public $case_id;
