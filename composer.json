@@ -27,12 +27,12 @@
     },
     "autoload": {
         "psr-4": {
-            "LasseRafn\\laravel-intempus\\": "src"
+            "LasseRafn\\LaravelIntempus\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "LasseRafn\\laravel-intempus\\": "tests"
+            "LasseRafn\\LaravelIntempus\\": "tests"
         }
     },
     "scripts": {
