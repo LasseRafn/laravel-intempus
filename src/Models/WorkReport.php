@@ -1,5 +1,7 @@
 <?php namespace LasseRafn\LaravelIntempus\Models;
 
+use LasseRafn\LaravelIntempus\Builders\CaseBuilder;
+use LasseRafn\LaravelIntempus\Builders\ContractBuilder;
 use LasseRafn\LaravelIntempus\Utils\Model;
 
 class WorkReport extends Model
@@ -40,4 +42,28 @@ class WorkReport extends Model
 	public $uuid;
 	public $creation_datetime;
 	public $logical_timestamp;
+
+	/**
+	 * @return CaseModel
+	 */
+	public function case()
+	{
+		return (new CaseBuilder($this->request))->find($this->case_id);
+	}
+
+	/**
+	 * @return Contract
+	 */
+	public function contract()
+	{
+		return (new ContractBuilder($this->request))->find($this->contract_id);
+	}
+
+	/**
+	 * @return Employee
+	 */
+	public function employee()
+	{
+		return $this->contract()->employee();
+	}
 }

@@ -1,5 +1,6 @@
 <?php namespace LasseRafn\LaravelIntempus\Models;
 
+use LasseRafn\LaravelIntempus\Builders\EmployeeBuilder;
 use LasseRafn\LaravelIntempus\Utils\Model;
 
 class Contract extends Model
@@ -34,4 +35,12 @@ class Contract extends Model
 	public $uuid;
 	public $work_model_id;
 	public $working_hours_agreement_id;
+
+	/**
+	 * @return Employee
+	 */
+	public function employee()
+	{
+		return (new EmployeeBuilder($this->request))->find($this->employee_id);
+	}
 }
