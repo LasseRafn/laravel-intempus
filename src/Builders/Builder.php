@@ -67,9 +67,7 @@ class Builder
         ]);
 
         $fetchedItems = $responseData->responses[0];
-
-        dd($fetchedItems);
-
+	    
         $items = collect([]);
         foreach ($fetchedItems as $item) {
             /** @var Model $model */
