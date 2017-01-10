@@ -2,6 +2,7 @@
 
 use LasseRafn\LaravelIntempus\Builders\CaseBuilder;
 use LasseRafn\LaravelIntempus\Builders\ContractBuilder;
+use LasseRafn\LaravelIntempus\Builders\ProductBuilder;
 use LasseRafn\LaravelIntempus\Utils\Model;
 
 class WorkReport extends Model
@@ -57,6 +58,14 @@ class WorkReport extends Model
 	public function contract()
 	{
 		return (new ContractBuilder($this->request))->find($this->contract_id);
+	}
+
+	/**
+	 * @return Product
+	 */
+	public function product()
+	{
+		return (new ProductBuilder($this->request))->find($this->product_id);
 	}
 
 	/**
