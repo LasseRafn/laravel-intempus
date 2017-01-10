@@ -1,5 +1,6 @@
 <?php namespace LasseRafn\LaravelIntempus\Models;
 
+use LasseRafn\LaravelIntempus\Builders\CustomerBuilder;
 use LasseRafn\LaravelIntempus\Utils\Model;
 
 class CaseModel extends Model
@@ -58,4 +59,12 @@ class CaseModel extends Model
     public $street_address;
     public $uuid;
     public $zip_code;
+
+	/**
+	 * @return Customer
+	 */
+	public function customer()
+	{
+		return ( new CustomerBuilder( $this->request ) )->find( $this->customer_id );
+	}
 }
