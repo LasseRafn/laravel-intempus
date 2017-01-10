@@ -22,9 +22,9 @@ class WorkReport extends Model
 		'start_date',
 		'start_time',
 		'work_type_id',
-	    'uuid',
-	    'creation_datetime',
-	    'logical_timestamp',
+		'uuid',
+		'creation_datetime',
+		'logical_timestamp',
 	];
 
 	public $id;
@@ -49,7 +49,7 @@ class WorkReport extends Model
 	 */
 	public function case()
 	{
-		return (new CaseBuilder($this->request))->find($this->case_id);
+		return ( new CaseBuilder( $this->request ) )->find( $this->case_id );
 	}
 
 	/**
@@ -57,7 +57,7 @@ class WorkReport extends Model
 	 */
 	public function contract()
 	{
-		return (new ContractBuilder($this->request))->find($this->contract_id);
+		return ( new ContractBuilder( $this->request ) )->find( $this->contract_id );
 	}
 
 	/**
@@ -65,7 +65,7 @@ class WorkReport extends Model
 	 */
 	public function product()
 	{
-		return (new ProductBuilder($this->request))->find($this->product_id);
+		return ( new ProductBuilder( $this->request ) )->find( $this->product_id );
 	}
 
 	/**
