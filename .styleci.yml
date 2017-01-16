@@ -1,1 +1,2 @@
-preset: psr4
+preset: recommended
+exclude: vendor
