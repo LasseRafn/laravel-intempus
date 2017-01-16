@@ -1,6 +1,9 @@
 # laravel-intempus
 
-<a href="https://packagist.org/packages/lasserafn/laravel-intempus"><img src="https://img.shields.io/packagist/v/lasserafn/laravel-intempus.svg?style=flat-square" alt="Version" /></a><a href="https://packagist.org/packages/lasserafn/laravel-intempus"><img src="https://img.shields.io/packagist/dt/lasserafn/laravel-intempus.svg?style=flat-square" alt="Downloads" /></a><img src="https://styleci.io/repos/76856364/shield?branch=master" alt="StyleCI Shield">[![Software License][ico-license]](LICENSE.md)
+<a href="https://packagist.org/packages/lasserafn/laravel-intempus"><img src="https://img.shields.io/packagist/v/lasserafn/laravel-intempus.svg?style=flat-square" alt="Version" /></a>
+<a href="https://packagist.org/packages/lasserafn/laravel-intempus"><img src="https://img.shields.io/packagist/dt/lasserafn/laravel-intempus.svg?style=flat-square" alt="Downloads" /></a>
+<img src="https://styleci.io/repos/76856364/shield?branch=master" alt="StyleCI Shield" />
+[![Software License][ico-license]](LICENSE.md)
 
 ## Install
 
