@@ -1,13 +1,13 @@
-<?php namespace LasseRafn\LaravelIntempus\Utils;
+<?php
 
-use LasseRafn\LaravelIntempus\Utils\Request;
+namespace LasseRafn\LaravelIntempus\Utils;
 
 class Model
 {
     protected $entity;
     protected $primaryKey;
     protected $modelClass = self::class;
-    protected $fillable   = [  ];
+    protected $fillable = [];
 
     /**
      * @var Request
@@ -19,17 +19,17 @@ class Model
         $this->request = $request;
 
         foreach ($this->fillable as $fillable) {
-            if (is_array($data) && isset($data[ $fillable ])) {
-                if (!method_exists($this, 'set' . ucfirst(camel_case($fillable)) . 'Attribute')) {
+            if (is_array($data) && isset($data[$fillable])) {
+                if (! method_exists($this, 'set'.ucfirst(camel_case($fillable)).'Attribute')) {
                     $this->setAttribute($fillable, $data[$fillable]);
                 } else {
-                    $this->setAttribute($fillable, $this->{'set' . ucfirst(camel_case($fillable)) . 'Attribute'}($data[$fillable]));
+                    $this->setAttribute($fillable, $this->{'set'.ucfirst(camel_case($fillable)).'Attribute'}($data[$fillable]));
                 }
             } elseif (is_object($data) && isset($data->{$fillable})) {
-                if (!method_exists($this, 'set' . ucfirst(camel_case($fillable)) . 'Attribute')) {
+                if (! method_exists($this, 'set'.ucfirst(camel_case($fillable)).'Attribute')) {
                     $this->setAttribute($fillable, $data->{$fillable});
                 } else {
-                    $this->setAttribute($fillable, $this->{'set' . ucfirst(camel_case($fillable)) . 'Attribute'}($data->{$fillable}));
+                    $this->setAttribute($fillable, $this->{'set'.ucfirst(camel_case($fillable)).'Attribute'}($data->{$fillable}));
                 }
             }
         }

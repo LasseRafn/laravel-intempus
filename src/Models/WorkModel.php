@@ -1,10 +1,12 @@
-<?php namespace LasseRafn\LaravelIntempus\Models;
+<?php
+
+namespace LasseRafn\LaravelIntempus\Models;
 
 use LasseRafn\LaravelIntempus\Utils\Model;
 
 class WorkModel extends Model
 {
-    protected $entity   = 'WorkModel';
+    protected $entity = 'WorkModel';
     protected $fillable = [
         'id',
         'default_hourly_wage',

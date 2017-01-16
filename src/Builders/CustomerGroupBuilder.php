@@ -1,4 +1,6 @@
-<?php namespace LasseRafn\LaravelIntempus\Builders;
+<?php
+
+namespace LasseRafn\LaravelIntempus\Builders;
 
 use LasseRafn\LaravelIntempus\Models\CustomerGroup;
 
