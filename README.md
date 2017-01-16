@@ -115,7 +115,7 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 * Allow updating models/entities through the API
 * Limit ->get() method to X results and include an ->all() method that uses pagination
 * Add missing models
-* Add relationship-ish behaviour, like:
+* Add relationship-ish behaviour
 
 ## Reason for doing this
 As of creating this package, I'm employeed at [Bizz Zolutions](https://bizzz.dk) - and one of my tasks was integrating [Intempus timeregistrering](https://bizzz.dk/partnere/intempus-timeregistrering) with [e-conomic regnskabsprogram](https://bizzz.dk/partnere/e-conomic-regnskabsprogram).
