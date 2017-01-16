@@ -1,5 +1,6 @@
 <?php namespace LasseRafn\LaravelIntempus\Models;
 
+use LasseRafn\LaravelIntempus\Builders\ProductBuilder;
 use LasseRafn\LaravelIntempus\Builders\WorkCategoryBuilder;
 use LasseRafn\LaravelIntempus\Utils\Model;
 
@@ -46,5 +47,13 @@ class WorkType extends Model
 	public function workCategory()
 	{
 		return (new WorkCategoryBuilder($this->request))->find($this->work_category_id);
+	}
+
+	/**
+	 * @return Model|mixed|Product
+	 */
+	public function billAsProduct()
+	{
+		return (new ProductBuilder($this->request))->find($this->bill_as_product_id);
 	}
 }
