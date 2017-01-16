@@ -2,6 +2,7 @@
 
 namespace LasseRafn\LaravelIntempus\Models;
 
+use LasseRafn\LaravelIntempus\Builders\WorkTypeBuilder;
 use LasseRafn\LaravelIntempus\Utils\Model;
 use LasseRafn\LaravelIntempus\Builders\CaseBuilder;
 use LasseRafn\LaravelIntempus\Builders\ProductBuilder;
@@ -76,5 +77,13 @@ class WorkReport extends Model
     public function employee()
     {
         return $this->contract()->employee();
+    }
+
+    /**
+     * @return WorkType
+     */
+    public function workType()
+    {
+	    return ( new WorkTypeBuilder($this->request) )->find($this->work_type_id);
     }
 }
