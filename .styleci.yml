@@ -1,2 +1,5 @@
 preset: recommended
-exclude: vendor
+
+finder:
+    exclude:
+        - "vendor"
