@@ -46,7 +46,7 @@ class Intempus
             $domain = env('APP_URL');
         }
 
-        $domain = preg_replace('/http(?s)\:\/\//', '', $domain);
+        $domain = preg_replace('/http(s?)\:\/\//', '', $domain);
 
         $url = str_replace(':domain', $domain, $url);
         $url = str_replace(':hash', $hash, $url);
