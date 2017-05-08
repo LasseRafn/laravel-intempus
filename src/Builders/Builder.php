@@ -7,87 +7,87 @@ use LasseRafn\LaravelIntempus\Utils\Request;
 
 class Builder
 {
-    private $request;
-    protected $entity;
+	private   $request;
+	protected $entity;
 
-    /** @var Model */
-    protected $model;
+	/** @var Model */
+	protected $model;
 
-    public function __construct(Request $request)
-    {
-        $this->request = $request;
-    }
+	public function __construct( Request $request )
+	{
+		$this->request = $request;
+	}
 
-    /**
-     * @param $id
-     *
-     * @return mixed|Model
-     */
-    public function find($id)
-    {
-        $responseData = $this->request->post([
-            'queries' => [
-                ['class' => $this->entity, 'type' => 'data-list', 'id' => [$id]],
-            ],
-        ]);
+	/**
+	 * @param $id
+	 *
+	 * @return mixed|Model
+	 */
+	public function find( $id )
+	{
+		$responseData = $this->request->post( [
+			'queries' => [
+				[ 'class' => $this->entity, 'type' => 'data-list', 'id' => [ $id ] ],
+			],
+		] );
 
-        if (count($responseData->responses[0]) === 0) {
-            return new $this->model($this->request);
-        }
+		if ( count( $responseData->responses[0] ) === 0 )
+		{
+			return false;
+		}
 
-        return new $this->model($this->request, $responseData->responses[0][0]);
-    }
+		return new $this->model( $this->request, $responseData->responses[0][0] );
+	}
 
-    public function first()
-    {
-        $responseData = $this->request->post([
-            'queries' => [
-                ['class' => $this->entity, 'type' => 'data-list'],
-            ],
-        ]);
+	public function first()
+	{
+		$responseData = $this->request->post( [
+			'queries' => [
+				[ 'class' => $this->entity, 'type' => 'data-list' ],
+			],
+		] );
 
-        $fetchedItems = $responseData->responses[0];
+		$fetchedItems = $responseData->responses[0];
 
-        if (count($fetchedItems) === 0) {
-            return new $this->model($this->request);
-        }
+		if ( count( $fetchedItems ) === 0 )
+		{
+			return false;
+		}
 
-        return new $this->model($this->request, $fetchedItems[0]);
-    }
+		return new $this->model( $this->request, $fetchedItems[0] );
+	}
 
-    /**
-     * @return \Illuminate\Support\Collection|Model[]
-     */
-    public function get()
-    {
-        $responseData = $this->request->post([
-            'queries' => [
-                ['class' => $this->entity, 'type' => 'data-list'],
-            ],
-        ]);
+	/**
+	 * @return \Illuminate\Support\Collection|Model[]
+	 */
+	public function get()
+	{
+		$responseData = $this->request->post( [
+			'queries' => [
+				[ 'class' => $this->entity, 'type' => 'data-list' ],
+			],
+		] );
 
-        $fetchedItems = $responseData->responses[0];
+		$fetchedItems = $responseData->responses[0];
 
-        $items = collect([]);
-        foreach ($fetchedItems as $item) {
-            /** @var Model $model */
-            $model = new $this->model($this->request, $item);
+		$items = collect( [] );
+		foreach ( $fetchedItems as $item )
+		{
+			/** @var Model $model */
+			$model = new $this->model( $this->request, $item );
 
-            $items->push($model);
-        }
+			$items->push( $model );
+		}
 
-        return $items;
-    }
+		return $items;
+	}
 
-    public function create($data)
-    {
-        // todo
-        $response = $this->request->curl->post("/{$this->entity}", [
-            'json' => $data,
-        ]);
+	public function create( $data )
+	{
+		$response = $this->request->create( $data );
 
-        $responseData = json_decode($response->getBody()->getContents());
+		$responseData = json_decode( $response->getBody()->getContents() );
 
-        return new $this->model($this->request, $responseData);
-    }
+		return new $this->model( $this->request, $responseData );
+	}
 }

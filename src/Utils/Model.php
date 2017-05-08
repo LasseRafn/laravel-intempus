@@ -2,61 +2,80 @@
 
 namespace LasseRafn\LaravelIntempus\Utils;
 
+use LasseRafn\LaravelIntempus\Builders\Builder;
+
 class Model
 {
-    protected $entity;
-    protected $primaryKey;
-    protected $modelClass = self::class;
-    protected $fillable = [];
+	protected $entity;
+	protected $primaryKey;
+	protected $modelClass = self::class;
+	protected $fillable   = [];
 
-    /**
-     * @var Request
-     */
-    protected $request;
+	/**
+	 * @var Request
+	 */
+	protected $request;
 
-    public function __construct(Request $request, $data = [])
-    {
-        $this->request = $request;
+	public function __construct( Request $request, $data = [] )
+	{
+		$this->request = $request;
 
-        foreach ($this->fillable as $fillable) {
-            if (is_array($data) && isset($data[$fillable])) {
-                if (! method_exists($this, 'set'.ucfirst(camel_case($fillable)).'Attribute')) {
-                    $this->setAttribute($fillable, $data[$fillable]);
-                } else {
-                    $this->setAttribute($fillable, $this->{'set'.ucfirst(camel_case($fillable)).'Attribute'}($data[$fillable]));
-                }
-            } elseif (is_object($data) && isset($data->{$fillable})) {
-                if (! method_exists($this, 'set'.ucfirst(camel_case($fillable)).'Attribute')) {
-                    $this->setAttribute($fillable, $data->{$fillable});
-                } else {
-                    $this->setAttribute($fillable, $this->{'set'.ucfirst(camel_case($fillable)).'Attribute'}($data->{$fillable}));
-                }
-            }
-        }
-    }
+		foreach ( $this->fillable as $fillable )
+		{
+			if ( is_array( $data ) && isset( $data[ $fillable ] ) )
+			{
+				if ( ! method_exists( $this, 'set' . ucfirst( camel_case( $fillable ) ) . 'Attribute' ) )
+				{
+					$this->setAttribute( $fillable, $data[ $fillable ] );
+				}
+				else
+				{
+					$this->setAttribute( $fillable, $this->{'set' . ucfirst( camel_case( $fillable ) ) . 'Attribute'}( $data[ $fillable ] ) );
+				}
+			}
+			elseif ( is_object( $data ) && isset( $data->{$fillable} ) )
+			{
+				if ( ! method_exists( $this, 'set' . ucfirst( camel_case( $fillable ) ) . 'Attribute' ) )
+				{
+					$this->setAttribute( $fillable, $data->{$fillable} );
+				}
+				else
+				{
+					$this->setAttribute( $fillable, $this->{'set' . ucfirst( camel_case( $fillable ) ) . 'Attribute'}( $data->{$fillable} ) );
+				}
+			}
+		}
+	}
 
-    public function __toString()
-    {
-        return json_encode($this->toArray());
-    }
+	public function __toString()
+	{
+		return json_encode( $this->toArray() );
+	}
 
-    public function toArray()
-    {
-        $data = [];
+	public function toArray()
+	{
+		$data = [];
 
-        foreach ($this->fillable as $fillable) {
-            if (isset($this->{$fillable})) {
-                $data[$fillable] = $this->{$fillable};
-            }
-        }
+		foreach ( $this->fillable as $fillable )
+		{
+			if ( isset( $this->{$fillable} ) )
+			{
+				$data[ $fillable ] = $this->{$fillable};
+			}
+		}
 
-        return $data;
-    }
+		return $data;
+	}
 
-    protected function setAttribute($attribute, $value)
-    {
-        $this->{$attribute} = $value;
-    }
+	protected function setAttribute( $attribute, $value )
+	{
+		$this->{$attribute} = $value;
+	}
 
-    // todo allow updating + deleting
+	public function update( $data )
+	{
+		return new self( $this->request, $this->request->update( $this->entity, $this->{$this->primaryKey}, $data ) );
+	}
+
+	// todo allow deleting
 }
