@@ -25,6 +25,7 @@ class WorkReport extends Model
         'start_date',
         'start_time',
         'work_type_id',
+        'employee_id',
         'uuid',
         'creation_datetime',
         'logical_timestamp',
@@ -36,6 +37,7 @@ class WorkReport extends Model
     public $case_id;
     public $contract_id;
     public $creation_id;
+    public $employee_id;
     public $end_date;
     public $end_time;
     public $product_id;
