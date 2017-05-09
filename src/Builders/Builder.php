@@ -60,11 +60,18 @@ class Builder
 	/**
 	 * @return \Illuminate\Support\Collection|Model[]
 	 */
-	public function get()
+	public function get( $conditionKey = null, $conditionValue = null )
 	{
+		$query = [ 'class' => $this->entity, 'type' => 'data-list' ];
+
+		if ( $conditionKey )
+		{
+			$query[ $conditionKey ] = $conditionValue;
+		}
+
 		$responseData = $this->request->post( [
 			'queries' => [
-				[ 'class' => $this->entity, 'type' => 'data-list' ],
+				$query,
 			],
 		] );
 
