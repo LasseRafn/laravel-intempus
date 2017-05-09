@@ -21,11 +21,13 @@ class Intempus
 	protected $request;
 	protected $nounce;
 	protected $pk;
+	protected $token;
 
 	public function __construct( $nounce = '', $token = '', $pk = '' )
 	{
 		$this->pk     = $pk;
 		$this->nounce = $nounce;
+		$this->token  = $token;
 
 		$this->request = new Request( $nounce, $token, $pk, $this->getEndpoint() . config( 'intempus.exchange_endpoint' ) );
 	}
@@ -129,12 +131,12 @@ class Intempus
 
 	public function batchHandle( array $createData = [], array $updateData = [] )
 	{
-		$data['nonce'] = $this->nounce;
-		$data['token'] = $this->token;
-
 		try
 		{
 			$formData = [];
+
+			$formData['nonce'] = $this->nounce;
+			$formData['token'] = $this->token;
 
 			if ( count( $createData ) )
 			{
@@ -150,7 +152,9 @@ class Intempus
 				'query'       => [
 					'pk' => $this->pk,
 				],
-				'form_params' => $formData
+				'form_params' => [
+					'data' => json_encode( $formData )
+				]
 			] );
 		} catch ( ClientException $exception )
 		{

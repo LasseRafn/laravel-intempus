@@ -56,9 +56,6 @@ class Request
 
 	public function create( $data, $entity )
 	{
-		$data['nonce'] = $this->nonce;
-		$data['token'] = $this->token;
-
 		try
 		{
 			$response = $this->curl->post( '', [
@@ -66,9 +63,13 @@ class Request
 					'pk' => $this->pk,
 				],
 				'form_params' => [
-					'create' => [
-						$entity => [ json_encode( $data ), ]
-					]
+					'data' => json_encode( [
+						'nonce'  => $this->nonce,
+						'token'  => $this->token,
+						'create' => (object) [
+							$entity => [ (object) $data ]
+						]
+					] )
 				],
 			] );
 		} catch ( ClientException $exception )
@@ -86,9 +87,6 @@ class Request
 
 	public function update( $entity, $primaryKey, $data )
 	{
-		$data['nonce'] = $this->nonce;
-		$data['token'] = $this->token;
-
 		try
 		{
 			$response = $this->curl->post( '', [
@@ -96,13 +94,17 @@ class Request
 					'pk' => $this->pk,
 				],
 				'form_params' => [
-					'update' => [
-						$entity => [
-							$primaryKey => [
-								'update' => json_encode( $data )
+					'data' => json_encode([
+						'nonce'  => $this->nonce,
+						'token'  => $this->token,
+						'update' => [
+							$entity => (object) [
+								$primaryKey => (object) [
+									'update' => (object) $data
+								]
 							]
-						]
-					],
+						],
+					])
 				],
 			] );
 		} catch ( ClientException $exception )
