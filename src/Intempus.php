@@ -18,105 +18,150 @@ use LasseRafn\LaravelIntempus\Builders\EmployeeCaseRuleBuilder;
 
 class Intempus
 {
-    protected $request;
+	protected $request;
+	protected $nounce;
+	protected $pk;
 
-    public function __construct($nounce = '', $token = '', $pk = '')
-    {
-        $this->request = new Request($nounce, $token, $pk, $this->getEndpoint().config('intempus.exchange_endpoint'));
-    }
+	public function __construct( $nounce = '', $token = '', $pk = '' )
+	{
+		$this->pk     = $pk;
+		$this->nounce = $nounce;
 
-    private function getEndpoint()
-    {
-        return config('intempus.test_mode') ? config('intempus.test_request_endpoint') : config('intempus.request_endpoint');
-    }
+		$this->request = new Request( $nounce, $token, $pk, $this->getEndpoint() . config( 'intempus.exchange_endpoint' ) );
+	}
 
-    public function getAuth($nonce = '')
-    {
-        $url = $this->getEndpoint().config('intempus.auth_endpoint');
+	private function getEndpoint()
+	{
+		return config( 'intempus.test_mode' ) ? config( 'intempus.test_request_endpoint' ) : config( 'intempus.request_endpoint' );
+	}
 
-        if (empty($nonce) || $nonce === '') {
-            $nonce = str_random(65);
-        }
+	public function getAuth( $nonce = '' )
+	{
+		$url = $this->getEndpoint() . config( 'intempus.auth_endpoint' );
 
-        $hash = hash('sha384', $nonce);
+		if ( empty( $nonce ) || $nonce === '' )
+		{
+			$nonce = str_random( 65 );
+		}
 
-        $domain = config('intempus.domain');
+		$hash = hash( 'sha384', $nonce );
 
-        if (! $domain) {
-            $domain = env('APP_URL');
-        }
+		$domain = config( 'intempus.domain' );
 
-        $domain = preg_replace('/http(s?)\:\/\//', '', $domain);
+		if ( ! $domain )
+		{
+			$domain = env( 'APP_URL' );
+		}
 
-        $url = str_replace(':domain', $domain, $url);
-        $url = str_replace(':hash', $hash, $url);
+		$domain = preg_replace( '/http(s?)\:\/\//', '', $domain );
 
-        $this->request->nounce = $nonce;
+		$url = str_replace( ':domain', $domain, $url );
+		$url = str_replace( ':hash', $hash, $url );
 
-        return [
-            'url'   => $url,
-            'hash'  => $hash,
-            'nonce' => $nonce,
-        ];
-    }
+		$this->request->nounce = $nonce;
 
-    public function workModels()
-    {
-        return new WorkModelBuilder($this->request);
-    }
+		return [
+			'url'   => $url,
+			'hash'  => $hash,
+			'nonce' => $nonce,
+		];
+	}
 
-    public function cases()
-    {
-        return new CaseBuilder($this->request);
-    }
+	public function workModels()
+	{
+		return new WorkModelBuilder( $this->request );
+	}
 
-    public function caseGroups()
-    {
-        return new CaseGroupBuilder($this->request);
-    }
+	public function cases()
+	{
+		return new CaseBuilder( $this->request );
+	}
 
-    public function contracts()
-    {
-        return new ContractBuilder($this->request);
-    }
+	public function caseGroups()
+	{
+		return new CaseGroupBuilder( $this->request );
+	}
 
-    public function customers()
-    {
-        return new CustomerBuilder($this->request);
-    }
+	public function contracts()
+	{
+		return new ContractBuilder( $this->request );
+	}
 
-    public function customerGroups()
-    {
-        return new CustomerGroupBuilder($this->request);
-    }
+	public function customers()
+	{
+		return new CustomerBuilder( $this->request );
+	}
 
-    public function employees()
-    {
-        return new EmployeeBuilder($this->request);
-    }
+	public function customerGroups()
+	{
+		return new CustomerGroupBuilder( $this->request );
+	}
 
-    public function employeeCaseRules()
-    {
-        return new EmployeeCaseRuleBuilder($this->request);
-    }
+	public function employees()
+	{
+		return new EmployeeBuilder( $this->request );
+	}
 
-    public function products()
-    {
-        return new ProductBuilder($this->request);
-    }
+	public function employeeCaseRules()
+	{
+		return new EmployeeCaseRuleBuilder( $this->request );
+	}
 
-    public function workCategories()
-    {
-        return new WorkCategoryBuilder($this->request);
-    }
+	public function products()
+	{
+		return new ProductBuilder( $this->request );
+	}
 
-    public function workReports()
-    {
-        return new WorkReportBuilder($this->request);
-    }
+	public function workCategories()
+	{
+		return new WorkCategoryBuilder( $this->request );
+	}
 
-    public function workTypes()
-    {
-        return new WorkTypeBuilder($this->request);
-    }
+	public function workReports()
+	{
+		return new WorkReportBuilder( $this->request );
+	}
+
+	public function workTypes()
+	{
+		return new WorkTypeBuilder( $this->request );
+	}
+
+	public function batchHandle( array $createData = [], array $updateData = [] )
+	{
+		$data['nonce'] = $this->nounce;
+		$data['token'] = $this->token;
+
+		try
+		{
+			$formData = [];
+
+			if ( count( $createData ) )
+			{
+				$formData['create'] = $createData;
+			}
+
+			if ( count( $updateData ) )
+			{
+				$formData['update'] = $updateData;
+			}
+
+			$response = $this->request->curl->post( '', [
+				'query'       => [
+					'pk' => $this->pk,
+				],
+				'form_params' => $formData
+			] );
+		} catch ( ClientException $exception )
+		{
+			if ( $exception->hasResponse() )
+			{
+				throw new \Exception( $exception->getResponse()->getBody()->getContents() );
+			}
+
+			throw $exception;
+		}
+
+		return json_decode( $response->getBody()->getContents() );
+	}
 }
