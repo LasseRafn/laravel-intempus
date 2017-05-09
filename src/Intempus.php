@@ -140,12 +140,12 @@ class Intempus
 
 			if ( count( $createData ) )
 			{
-				$formData['create'] = $createData;
+				$formData['create'] = (object) $createData;
 			}
 
 			if ( count( $updateData ) )
 			{
-				$formData['update'] = $updateData;
+				$formData['update'] = (object) $updateData;
 			}
 
 			$response = $this->request->curl->post( '', [
