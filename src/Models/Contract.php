@@ -21,6 +21,7 @@ class Contract extends Model
         'start_date',
         'uuid',
         'work_model_id',
+        'creation_id',
         'working_hours_agreement_id',
     ];
 
@@ -36,6 +37,7 @@ class Contract extends Model
     public $start_date;
     public $uuid;
     public $work_model_id;
+    public $creation_id;
     public $working_hours_agreement_id;
 
     /**
