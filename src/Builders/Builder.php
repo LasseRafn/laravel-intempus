@@ -84,7 +84,7 @@ class Builder
 
 	public function create( $data )
 	{
-		$response = $this->request->create( $data );
+		$response = $this->request->create( $data, $this->entity );
 
 		$responseData = json_decode( $response->getBody()->getContents() );
 

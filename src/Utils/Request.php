@@ -3,6 +3,7 @@
 namespace LasseRafn\LaravelIntempus\Utils;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 
 class Request
 {
@@ -30,35 +31,55 @@ class Request
 		$data['nonce'] = $this->nonce;
 		$data['token'] = $this->token;
 
-		$response = $this->curl->post( '', [
-			'query'       => [
-				'pk' => $this->pk,
-			],
-			'form_params' => [
-				'data' => json_encode( $data ),
-			],
-		] );
+		try
+		{
+			$response = $this->curl->post( '', [
+				'query'       => [
+					'pk' => $this->pk,
+				],
+				'form_params' => [
+					'data' => json_encode( $data ),
+				],
+			] );
+		} catch ( ClientException $exception )
+		{
+			if ( $exception->hasResponse() )
+			{
+				throw new \Exception( $exception->getResponse()->getBody()->getContents() );
+			}
 
-		// todo check for errors and such
+			throw $exception;
+		}
 
 		return json_decode( $response->getBody()->getContents() );
 	}
 
-	public function create( $data )
+	public function create( $data, $entity )
 	{
 		$data['nonce'] = $this->nonce;
 		$data['token'] = $this->token;
 
-		$response = $this->curl->post( '', [
-			'query'       => [
-				'pk' => $this->pk,
-			],
-			'form_params' => [
-				'create' => json_encode( $data ),
-			],
-		] );
+		try
+		{
+			$response = $this->curl->post( '', [
+				'query'       => [
+					'pk' => $this->pk,
+				],
+				'form_params' => [
+					'create' => [
+						$entity => [ json_encode( $data ), ]
+					]
+				],
+			] );
+		} catch ( ClientException $exception )
+		{
+			if ( $exception->hasResponse() )
+			{
+				throw new \Exception( $exception->getResponse()->getBody()->getContents() );
+			}
 
-		// todo check for errors and such
+			throw $exception;
+		}
 
 		return json_decode( $response->getBody()->getContents() );
 	}
@@ -68,22 +89,31 @@ class Request
 		$data['nonce'] = $this->nonce;
 		$data['token'] = $this->token;
 
-		$response = $this->curl->post( '', [
-			'query'       => [
-				'pk' => $this->pk,
-			],
-			'form_params' => [
-				'update' => [
-					$entity => [
-						$primaryKey => [
-							'update' => json_encode( $data )
-						]
-					]
+		try
+		{
+			$response = $this->curl->post( '', [
+				'query'       => [
+					'pk' => $this->pk,
 				],
-			],
-		] );
+				'form_params' => [
+					'update' => [
+						$entity => [
+							$primaryKey => [
+								'update' => json_encode( $data )
+							]
+						]
+					],
+				],
+			] );
+		} catch ( ClientException $exception )
+		{
+			if ( $exception->hasResponse() )
+			{
+				throw new \Exception( $exception->getResponse()->getBody()->getContents() );
+			}
 
-		// todo check for errors and such
+			throw $exception;
+		}
 
 		return json_decode( $response->getBody()->getContents() );
 	}
